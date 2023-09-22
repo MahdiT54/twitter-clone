@@ -12,7 +12,7 @@ import Image from "next/image";
 
 export default function Sidebar() {
   return (
-    <div className="h-full hidden sm:flex flex-col fixed">
+    <div className="h-full hidden sm:flex flex-col fixed xl:ml-24">
       <nav className="h-full relative xl:space-y-1.5">
         <div className="flex justify-center xl:justify-start items-center py-3 xl:p-3">
           <Image src={"/assets/twitter-logo.png"} width={34} height={34} />
@@ -24,6 +24,10 @@ export default function Sidebar() {
         <SidebarLink Icon={BookmarkIcon} text={"Bookmarks"} />
         <SidebarLink Icon={UserIcon} text={"Profile"} />
         <SidebarLink Icon={DotsCircleHorizontalIcon} text={"More"} />
+        <button className="hidden xl:inline bg-[#1D9BF0]
+        rounded-full h-[52px] mt-2 w-[200px] text-lg font-bold">
+            Tweet
+        </button>
         <div className="absolute bottom-0">User</div>
       </nav>
     </div>
