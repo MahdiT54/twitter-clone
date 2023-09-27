@@ -27,7 +27,7 @@ export default function Home() {
         <PostFeed />
         <Trending />
       </div>
-
+      
       <CommentModal />
 
       {!username && <BottomBanner />}
