@@ -21,6 +21,7 @@ export async function getServerSideProps(context) {
     text: data.tweet,
     comments: data.comments || null,
     timestamp: JSON.stringify(data.timestamp.toDate()),
+    image: data.image || null
   };
 
   return {
@@ -73,6 +74,13 @@ export default function CommentsPage({ tweetData }) {
                   <Moment fromNow>{JSON.parse(tweetData.timestamp)}</Moment>
                 </div>
                 <span className="text-2xl">{tweetData.text}</span>
+
+                {tweetData.image && (
+                  <img
+                    className="object-cover border border-gray-700 rounded-md mt-3 max-h-80"
+                    src={tweetData.image}
+                  />
+                )}
               </div>
             </div>
           </div>
