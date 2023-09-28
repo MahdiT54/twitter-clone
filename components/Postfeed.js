@@ -36,6 +36,32 @@ export default function PostFeed() {
       })}
 
       {/* <Tweet /> */}
+
+      <div className="flex space-x-3 p-3 border-gray-700">
+        <img
+          className="w-11 h-11 rounded-full object-cover"
+          src="/assets/bragg.png"
+        />
+        <div>
+          <div className="text-gray-500 flex items-center space-x-2 mb-1">
+            <h1 className="text-white font-bold">Dev Tanzim</h1>
+            <span>@FrontDevops1</span>
+            <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
+          </div>
+          <span>
+            When signing up, please do not use real information!
+            <br />
+            <br />
+            Make sure to follow me on twitter @FrontDevops1 to stay updated!
+            <br />
+            Looking for a reliable Front-end Software Engineer for your team?{" "}
+            <br />
+            <a href="https://www.mahditanzim.me" target="_blank">
+            https://www.mahditanzim.me
+            </a>
+          </span>
+        </div>
+      </div>
     </div>
   );
 }
