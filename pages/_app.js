@@ -4,7 +4,7 @@ import { store } from "@/redux/store";
 
 export default function App({ Component, pageProps }) {
   return (
-    <Provider store={store}>
+    <Provider store={store}> // redux provider wraps the entire app to provide access to the store
       <Component {...pageProps} />
     </Provider>
   );

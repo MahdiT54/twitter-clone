@@ -13,7 +13,6 @@ export default function BottomBanner() {
 
       <div className="space-x-3">
         <LoginModal />
-        
         <SignupModal />
       </div>
     </div>
