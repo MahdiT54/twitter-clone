@@ -1,4 +1,4 @@
-import { db, storage } from "@/firebase";
+import { db } from "@/firebase";
 import { openLoginModal } from "@/redux/modalSlice";
 import {
   CalendarIcon,
@@ -9,7 +9,6 @@ import {
   XIcon,
 } from "@heroicons/react/outline";
 import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
-import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -31,30 +30,40 @@ export default function TweetInput() {
       return
     }
 
-    setLoading(true)
-    const docRef = await addDoc(collection(db, "posts"), {
-      // tweet details ( who did it, what time?)
-      username: user.username,
-      name: user.name,
-      photoUrl: user.photoUrl,
-      uid: user.uid,
-      timestamp: serverTimestamp(),
-      likes: [],
-      tweet: text,
-    });
-
-    if (image) {
-      const imageRef = ref(storage, `tweetImages/${docRef.id}`);
-      const uploadImage = await uploadString(imageRef, image, "data_url");
-      const downloadURL = await getDownloadURL(imageRef);
-      await updateDoc(doc(db, "posts", docRef.id), {
-        image: downloadURL,
+    setLoading(true);
+    try {
+      const docRef = await addDoc(collection(db, "posts"), {
+        username: user.username,
+        name: user.name,
+        photoUrl: user.photoUrl,
+        uid: user.uid,
+        timestamp: serverTimestamp(),
+        likes: [],
+        tweet: text,
       });
-    }
 
-    setText("")
-    setImage(null)
-    setLoading(false)
+      if (image) {
+        const uploadRes = await fetch("/api/upload-tweet-image", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ postId: docRef.id, dataUrl: image }),
+        });
+        const payload = await uploadRes.json().catch(() => ({}));
+        if (!uploadRes.ok) {
+          throw new Error(payload.message || "Image upload failed");
+        }
+        await updateDoc(doc(db, "posts", docRef.id), {
+          image: payload.publicUrl,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      alert(err.message || "Could not post tweet");
+    } finally {
+      setText("");
+      setImage(null);
+      setLoading(false);
+    }
   }
 
   function addImagetoTweet(e) {

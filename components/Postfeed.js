@@ -25,7 +25,7 @@ export default function PostFeed() {
     >
       <div
         className="px-3 py-2 text-lg sm:text-xl font-bold
-            border-b border-gray-700 sticky top-0 z-50"
+            border-b border-gray-700 bg-black sticky top-0 z-50"
       >
         Home
       </div>
